@@ -1,0 +1,28 @@
+---
+description: "High-quality code standards: no laziness, optimal solutions, full compatibility checks"
+globs: "**/*.py,**/*.sh,Dockerfile,docker-compose.yml,**/*.yml,**/*.toml"
+rule_type: "always"
+priority: "high"
+---
+
+# Quality First - No Shortcuts
+
+## 1. Rigorous Solution Evaluation
+- **Never settle for the first solution**. Always consider at least 2 alternatives before proposing.
+- **Ask yourself**: "Is this the most performant, maintainable, and elegant approach?"
+- **If uncertain**: Research patterns, check documentation, or admit uncertainty.
+- **Trade-off awareness**: Document why you chose one approach over another.
+- **NO validation errors**: **ALWAYS** check python file with `ruff/basedpyright` and ensure there are no linting/validation errors.
+- **ALWAYS** use `uv` for python (both package management and runtime).
+
+## 2. Context-Aware Compatibility
+- **Verify versions**: Check Python version, library versions, and framework compatibility before suggesting code.
+- **Respect existing patterns**: Match the project's style, naming conventions, and architecture.
+- **Dependency hygiene**: Prefer standard library over external deps when possible. Pin versions in requirements.
+- **Linux/Docker aware**: Consider containerization, permissions, and system integration from the start.
+
+## 3. No Lazy Solutions
+- **Edge cases matter**: Handle errors, empty inputs, race conditions, and failure modes.
+- **Security by default**: Validate inputs, sanitize outputs, avoid hardcoded secrets.
+- **Performance conscious**: Consider time/space complexity, especially for loops and I/O.
+- **Documentation**: Add docstrings, comments where logic is non-obvious.
