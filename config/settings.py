@@ -167,6 +167,8 @@ STORAGES = {
 # Media files (user uploads)
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+# Cache-Control max-age in seconds for media responses (default in middleware: 86400)
+# MEDIA_CACHE_MAX_AGE = 86400
 
 # Auth
 LOGIN_REDIRECT_URL = "/"
