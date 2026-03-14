@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<div class="header-top">
+  <a href="{% url 'web:home' %}" class="logo">
+    <span class="logo-inner">Morning &gt; Breadcrumbs</span>
+  </a>
+  <div class="header-right">
+    <form action="#" method="get" class="search-form" role="search">
+      <label for="search-input" class="visually-hidden">Search</label>
+      <div class="search-wrap">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="search" name="q" placeholder="Search..." aria-label="Search">
+      </div>
+    </form>
+    <div class="auth-row">
+      {% if user.is_authenticated %}
+        <a href="{% url 'admin:index' %}" class="btn-admin">ADMIN</a>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-logout">LOGOUT</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn-login">LOGIN</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block nav %}
+<ul class="nav-list">
+  <li>
+    <a href="{% url 'web:home' %}" class="active">01 ALL</a>
+  </li>
+  {% for category in categories %}
+    <li>
+      <a href="{% url 'web:category' category.slug %}">
+        {{ forloop.counter|stringformat:"02d" }} {{ category.name|upper }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+{% block main %}
+{% for category in categories %}
+<section class="section" aria-labelledby="section-{{ category.slug }}">
+  <div class="section-title-row">
+    <h2 id="section-{{ category.slug }}" class="section-title">{{ category.name|upper }}</h2>
+    <a href="{% url 'web:category' category.slug %}" class="section-see-all">SEE ALL →</a>
+  </div>
+  <hr class="section-divider">
+  <div class="cards-row">
+    {% for post in category.recent_posts %}
+      {% include "partials/post_card.html" with post=post %}
+    {% empty %}
+      <p>No posts yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock %}

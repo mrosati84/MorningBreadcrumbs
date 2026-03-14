@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Log in – Morning &gt; Breadcrumbs{% endblock %}
+
+{% block main %}
+<div class="section">
+  <h1 class="section-title">Log in</h1>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="post-card-cta">Log in</button>
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+</div>
+{% endblock %}

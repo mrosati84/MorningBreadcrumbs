@@ -1,0 +1,393 @@
+/* Morning Breadcrumbs – base styles */
+/* Design tokens from Frontpage (Anonymous) frame */
+
+/* Fonts: DM Mono (headings, nav, buttons, card tag/title), Inter (card description) */
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap");
+
+/* Minimal reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: #f5f5f5;
+  color: #000;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.5rem 1rem;
+  background: #000;
+  color: #fff;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Layout wrapper */
+.site-header,
+.site-nav,
+.site-main,
+.site-footer {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header: two rows */
+.site-header {
+  background: #d9d9d9;
+  width: 100%;
+}
+
+.site-header .header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 56px;
+  width: 100%;
+}
+
+.site-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Logo: white box with solid black drop shadow (down and right) */
+.site-header .logo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.site-header .logo-inner {
+  display: inline-block;
+  padding: 13px 18px;
+  background: #fff;
+  border: 1px solid #000;
+  box-shadow: 14px 12px 0 0 #000;
+  font-family: "DM Mono", monospace;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+  text-align: center;
+}
+
+.site-header .search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  width: 280px;
+  background: #d0d0d0;
+}
+
+.site-header .search-icon {
+  flex-shrink: 0;
+  color: #888;
+}
+
+.site-header .search-wrap input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  color: #000;
+  outline: none;
+}
+
+.site-header .search-wrap input::placeholder {
+  color: #888;
+}
+
+/* ADMIN / LOGIN: solid black, white text, no border */
+.site-header .btn-admin,
+.site-header .btn-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: #000;
+  color: #fff;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* LOGOUT: white fill, black text and thin black border */
+.site-header .btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: #fff;
+  color: #000;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.site-header .btn-admin:hover,
+.site-header .btn-login:hover,
+.site-header .btn-logout:hover {
+  opacity: 0.9;
+}
+
+.site-header .auth-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-header .auth-row form {
+  display: inline;
+}
+
+/* Nav: category list with numbers */
+.site-nav {
+  background: #d9d9d9;
+  padding: 12px 56px;
+  width: 100%;
+}
+
+.site-nav .nav-list {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav .nav-list a {
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #666;
+  text-decoration: none;
+}
+
+.site-nav .nav-list a.active {
+  color: #780000;
+}
+
+.site-nav .nav-list a:hover {
+  color: #000;
+}
+
+/* Main content sections */
+.site-main {
+  padding: 0;
+  width: 100%;
+}
+
+.section {
+  padding: 48px 56px;
+  background: #f5f5f5;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 4px;
+}
+
+.section-title {
+  font-family: "DM Mono", monospace;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  color: #000;
+  margin: 0;
+}
+
+.section-see-all {
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #888;
+  text-decoration: none;
+}
+
+.section-see-all:hover {
+  color: #000;
+}
+
+.section-divider {
+  height: 2px;
+  background: #000;
+  width: 100%;
+  margin: 0;
+  border: none;
+}
+
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* Post card */
+.post-card {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.post-card-image {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.post-card-image-wrap {
+  width: 100%;
+  height: 420px;
+  background: #e7e8e5;
+}
+
+.post-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-card-tag {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #888;
+  margin: 0;
+}
+
+.post-card-title {
+  font-family: "DM Mono", monospace;
+  font-size: 24px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.2;
+  color: #000;
+  margin: 0;
+}
+
+.post-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-card-title a:hover {
+  text-decoration: underline;
+}
+
+.post-card-description {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #666;
+  margin: 0;
+}
+
+.post-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: #000;
+  color: #fff;
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.post-card-cta:hover {
+  opacity: 0.9;
+}
+
+/* Footer */
+.site-footer {
+  background: #000;
+  width: 100%;
+  padding: 0;
+}
+
+.site-footer .footer-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 56px 40px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.site-footer .footer-tagline {
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: #666;
+  margin: 0;
+}
+
+.site-footer .footer-brand {
+  font-family: "DM Mono", monospace;
+  font-size: 84px;
+  font-weight: 500;
+  line-height: 0.95;
+  color: #fff;
+  margin: 0;
+}
+
+.site-footer .footer-divider {
+  height: 1px;
+  background: #222;
+  width: 100%;
+  margin: 0;
+  border: none;
+}

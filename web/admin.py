@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, final
 
 from django.contrib import admin
 
+from .forms import PostAdminForm
 from .models import Category, Post, Tag
 
 if TYPE_CHECKING:
@@ -37,6 +38,7 @@ class TagAdmin(TagAdminBase):
 @final
 @admin.register(Post)
 class PostAdmin(PostAdminBase):
+    form = PostAdminForm
     list_display = ("title", "category", "tags_list", "link")
     list_filter = ("category", "tags")
     search_fields = ("title", "description", "link")
