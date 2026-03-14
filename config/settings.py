@@ -52,6 +52,16 @@ CSRF_TRUSTED_ORIGINS = [
     if s.strip()
 ]
 
+# Behind a TLS-terminating proxy (e.g. Railway): trust X-Forwarded-Proto so
+# request.is_secure() and cookie Secure flag are correct
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# In production, send cookies only over HTTPS
+if not DEBUG:
+    SECURE_SSL_REDIRECT = False  # Railway handles redirect; don't double-redirect
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 # Application definition
 
 INSTALLED_APPS = [
