@@ -1,0 +1,46 @@
+# Virtual env and local Python
+.venv
+venv
+.env
+.env.*
+!.env.example
+
+# Runtime-generated (use volumes in production)
+media
+static
+
+# Git and IDE
+.git
+.gitignore
+.cursor
+.vscode
+*.swp
+*.swo
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info
+.eggs
+dist
+build
+
+# Testing and dev
+.pytest_cache
+.coverage
+htmlcov
+.mypy_cache
+.ruff_cache
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose*
+.docker
+
+# Docs and misc
+*.md
+!README.md

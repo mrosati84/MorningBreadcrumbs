@@ -14,25 +14,36 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env if present
+# Load environment variables from .env (python-dotenv)
 load_dotenv(BASE_DIR / ".env")
+
+
+def getenv_required(name: str) -> str:
+    """Return env var value; raise ImproperlyConfigured if missing."""
+    value = os.getenv(name)
+    if value is None or value == "":
+        raise ImproperlyConfigured(
+            f"Set the {name} environment variable (e.g. in .env)"
+        )
+    return value
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = getenv_required("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ["DJANGO_DEBUG"] == "True"
+DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split()
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 
 # Application definition
 
@@ -82,7 +93,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.environ["DATABASE_URL"],
+        default=getenv_required("DATABASE_URL"),
         conn_max_age=600,
     )
 }
