@@ -5,3 +5,6 @@ class WebConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "web"
     verbose_name = "Morning Breadcrumbs Posts"
+
+    def ready(self) -> None:
+        import web.signals  # noqa: F401

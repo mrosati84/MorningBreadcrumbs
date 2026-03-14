@@ -170,6 +170,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Cache-Control max-age in seconds for media responses (default in middleware: 86400)
 # MEDIA_CACHE_MAX_AGE = 86400
 
+# Post image optimization (applied on upload via web.image_processing)
+POST_IMAGE_MAX_SIZE = int(os.getenv("POST_IMAGE_MAX_SIZE", "400"))  # longest side in px
+POST_IMAGE_WEBP_QUALITY = int(os.getenv("POST_IMAGE_WEBP_QUALITY", "85"))  # 0–100
+
 # Auth
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
