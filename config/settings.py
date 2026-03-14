@@ -68,6 +68,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "web.context_processors.categories",
             ],
         },
     },
@@ -131,3 +132,4 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Auth
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
+LOGOUT_REDIRECT_URL = "/"

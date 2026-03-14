@@ -1,0 +1,12 @@
+<ul class="nav-list">
+  <li>
+    <a href="{% url 'web:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">01 ALL</a>
+  </li>
+  {% for category in categories %}
+    <li>
+      <a href="{% url 'web:category' category.slug %}">
+        {{ forloop.counter|stringformat:"02d" }} {{ category.name|upper }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

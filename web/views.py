@@ -1,9 +1,22 @@
 from collections import defaultdict
 
+from django.conf import settings
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib.auth.views import LoginView as AuthLoginView
 
 from web.models import Category, Post
+
+
+class LoginView(AuthLoginView):
+    """Login view that redirects authenticated users to the home page."""
+
+    template_name = "registration/login.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(settings.LOGIN_REDIRECT_URL)
+        return super().dispatch(request, *args, **kwargs)
 
 
 def home(request):

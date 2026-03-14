@@ -2,14 +2,57 @@
 
 {% block title %}Log in – Morning &gt; Breadcrumbs{% endblock %}
 
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock %}
+
+{% block nav %}
+{% include "partials/nav.html" %}
+{% endblock %}
+
 {% block main %}
-<div class="section">
-  <h1 class="section-title">Log in</h1>
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="post-card-cta">Log in</button>
-    <input type="hidden" name="next" value="{{ next }}">
-  </form>
+<div class="login-page">
+  <div class="login-form-card">
+    <h1 class="login-form-title">LOGIN</h1>
+    <hr class="login-form-divider" aria-hidden="true">
+    <div class="login-form-fields">
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="login-form-group">
+          <label for="id_username" class="login-form-label">Email</label>
+          <input
+            type="text"
+            name="username"
+            id="id_username"
+            class="login-form-input"
+            placeholder="you@example.com"
+            autocomplete="username"
+            required
+            {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
+          >
+          {% if form.username.errors %}
+            <p class="login-form-error">{{ form.username.errors.0 }}</p>
+          {% endif %}
+        </div>
+        <div class="login-form-group">
+          <label for="id_password" class="login-form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="id_password"
+            class="login-form-input"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+          >
+          {% if form.password.errors %}
+            <p class="login-form-error">{{ form.password.errors.0 }}</p>
+          {% endif %}
+        </div>
+        <button type="submit" class="login-form-submit">SIGN IN</button>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}
