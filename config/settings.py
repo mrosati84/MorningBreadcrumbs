@@ -45,6 +45,13 @@ DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() in ("true", "1", "yes")
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 
+# CSRF: in production (e.g. Railway), set to your public origin(s), comma-separated
+CSRF_TRUSTED_ORIGINS = [
+    s.strip()
+    for s in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+    if s.strip()
+]
+
 # Application definition
 
 INSTALLED_APPS = [
