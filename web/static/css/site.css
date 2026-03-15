@@ -266,6 +266,14 @@ body {
   width: 100%;
 }
 
+.search-empty {
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  grid-column: 1 / -1;
+}
+
 /* Post card */
 .post-card {
   background: #fff;

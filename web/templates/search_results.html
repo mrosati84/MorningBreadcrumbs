@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Morning &gt; Breadcrumbs &gt; Search{% if query %} &gt; {{ query }}{% endif %}{% endblock %}
+
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock %}
+
+{% block nav %}
+{% include "partials/nav.html" %}
+{% endblock %}
+
+{% block main %}
+<section class="section" aria-labelledby="search-results-heading">
+  <div class="section-title-row">
+    <h2 id="search-results-heading" class="section-title">
+      {% if query %}
+        Results for: {{ query }}
+      {% else %}
+        Search
+      {% endif %}
+    </h2>
+  </div>
+  <hr class="section-divider">
+  <div class="cards-row">
+    {% for post in posts %}
+      {% include "partials/post_card.html" with post=post %}
+    {% empty %}
+      {% if query %}
+        <p class="search-empty">No posts match “{{ query }}”. Try a different keyword or check the spelling.</p>
+      {% else %}
+        <p class="search-empty">Enter a keyword above to search posts by title or description.</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock %}

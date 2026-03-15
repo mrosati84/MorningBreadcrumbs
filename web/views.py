@@ -1,6 +1,9 @@
 from collections import defaultdict
 
 from django.conf import settings
+from django.db import connection
+from django.db.models import Q, Value
+from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.views import LoginView as AuthLoginView
 
@@ -53,4 +56,38 @@ def category_detail(request, slug):
             "posts": posts,
             "active_category_slug": category.slug,
         },
+    )
+
+
+def search(request):
+    """Search posts by title and description with typo tolerance (PostgreSQL trigram)."""
+    query = (request.GET.get("q") or "").strip()
+    posts = []
+    if query:
+        if connection.vendor == "postgresql":
+            from django.contrib.postgres.search import TrigramSimilarity
+
+            # Combined similarity on title and description; threshold allows typo tolerance
+            similarity = Coalesce(
+                TrigramSimilarity("title", query), Value(0.0)
+            ) + Coalesce(TrigramSimilarity("description", query), Value(0.0))
+            posts = list(
+                Post.objects.annotate(similarity=similarity)
+                .filter(similarity__gt=0.1)
+                .order_by("-similarity", "-created_at")
+                .select_related("category")
+            )
+        else:
+            # Fallback for SQLite etc.: plain substring match
+            posts = list(
+                Post.objects.filter(
+                    Q(title__icontains=query) | Q(description__icontains=query)
+                )
+                .order_by("-created_at")
+                .select_related("category")
+            )
+    return render(
+        request,
+        "search_results.html",
+        {"query": query, "posts": posts},
     )
