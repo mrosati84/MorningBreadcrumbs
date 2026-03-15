@@ -1,5 +1,6 @@
 /* Morning Breadcrumbs – base styles */
 /* Design tokens from Frontpage (Anonymous) frame */
+/* Breakpoints (min-width): sm 640px, md 768px, lg 1024px — mobile-first */
 
 /* Fonts: DM Mono (headings, nav, buttons, card tag/title), Inter (card description) */
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap");
@@ -63,22 +64,28 @@ body {
 
 .site-header .header-top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 56px;
+  gap: 24px;
+  padding: 24px 16px;
   width: 100%;
 }
 
+/* On small viewports, header-right wraps to second row so search has room */
 .site-header .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  flex-basis: 100%;
+  min-width: 0;
 }
 
 /* Logo: white box with solid black drop shadow (down and right) */
 .site-header .logo {
   display: inline-block;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .site-header .logo-inner {
@@ -94,6 +101,49 @@ body {
   text-align: center;
 }
 
+/* Responsive header: narrow viewports (≤480px) – stack and compact for 320px */
+@media (max-width: 480px) {
+  .site-header .header-top {
+    padding: 16px 12px;
+    gap: 24px;
+  }
+
+  .site-header .header-right {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .site-header .search-form {
+    width: 100%;
+  }
+
+  .site-header .search-wrap {
+    max-width: none;
+    width: 100%;
+  }
+
+  .site-header .auth-row {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+/* Slightly smaller logo on very narrow viewports */
+@media (max-width: 400px) {
+  .site-header .logo-inner {
+    padding: 10px 12px;
+    font-size: 14px;
+    box-shadow: 10px 8px 0 0 #000;
+  }
+}
+
+.site-header .search-form {
+  flex: 1;
+  min-width: 0;
+}
+
 .site-header .search-wrap {
   display: flex;
   align-items: center;
@@ -101,7 +151,8 @@ body {
   padding: 8px 14px;
   border: 1px solid #000;
   border-radius: 4px;
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
   background: #d0d0d0;
 }
 
@@ -131,7 +182,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 8px 14px;
   background: #000;
   color: #fff;
   font-family: "DM Mono", monospace;
@@ -148,7 +199,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 8px 14px;
   background: #fff;
   color: #000;
   font-family: "DM Mono", monospace;
@@ -178,17 +229,45 @@ body {
 /* Nav: category list with numbers */
 .site-nav {
   background: #d9d9d9;
-  padding: 12px 56px;
+  padding: 12px 24px;
   width: 100%;
 }
 
 .site-nav .nav-list {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 480px) {
+  .site-nav {
+    padding: 12px 16px;
+  }
+
+  .site-nav .nav-list {
+    gap: 20px;
+    padding: 2px 0;
+    /* Extra padding at end so last item scrolls fully into view */
+    padding-inline-end: 16px;
+  }
+
+  .site-nav .nav-list a {
+    font-size: 12px;
+    padding: 6px 0;
+    white-space: nowrap;
+  }
+}
+
+.site-nav .nav-list li {
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }
 
 .site-nav .nav-list a {
@@ -215,7 +294,7 @@ body {
 }
 
 .section {
-  padding: 48px 56px;
+  padding: 32px 24px;
   background: #f5f5f5;
   gap: 12px;
   display: flex;
@@ -231,9 +310,9 @@ body {
 
 .section-title {
   font-family: "DM Mono", monospace;
-  font-size: 32px;
+  font-size: clamp(24px, 4vw, 32px);
   font-weight: 500;
-  letter-spacing: 6px;
+  letter-spacing: 0.05em;
   color: #000;
   margin: 0;
 }
@@ -261,7 +340,7 @@ body {
 
 .cards-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
   width: 100%;
 }
@@ -284,19 +363,19 @@ body {
 
 .post-card-image {
   width: 100%;
-  height: 420px;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
 }
 
 .post-card-image-wrap {
   width: 100%;
-  height: 420px;
+  aspect-ratio: 4 / 3;
   background: #e7e8e5;
 }
 
 .post-card-body {
-  padding: 24px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -364,7 +443,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  padding: 48px;
+  padding: 24px;
   background: #f5f5f5;
 }
 
@@ -374,7 +453,7 @@ body {
   gap: 24px;
   width: 100%;
   max-width: 400px;
-  padding: 48px;
+  padding: 24px;
   background: #fff;
 }
 
@@ -480,7 +559,7 @@ body {
 .site-footer .footer-inner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 56px 40px 34px;
+  padding: 40px 24px 34px;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -497,7 +576,7 @@ body {
 
 .site-footer .footer-brand {
   font-family: "DM Mono", monospace;
-  font-size: 84px;
+  font-size: clamp(36px, 12vw, 84px);
   font-weight: 500;
   line-height: 0.95;
   color: #fff;
@@ -510,4 +589,83 @@ body {
   width: 100%;
   margin: 0;
   border: none;
+}
+
+/* ========== Responsive (mobile-first: sm 480px, md 768px, lg 1024px) ========== */
+
+/* Single-row header from 480px up; below that logo and search+auth stack in two rows */
+@media (min-width: 480px) {
+  .site-header .header-top {
+    padding: 24px 24px;
+  }
+
+  .site-header .header-right {
+    flex-basis: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-header .header-top {
+    padding: 24px 40px;
+  }
+
+  .site-header .btn-admin,
+  .site-header .btn-login,
+  .site-header .btn-logout {
+    padding: 10px 20px;
+  }
+
+  .site-nav {
+    padding: 12px 40px;
+  }
+
+  .site-nav .nav-list {
+    gap: 32px;
+  }
+
+  .section {
+    padding: 48px 40px;
+  }
+
+  .section-title {
+    letter-spacing: 6px;
+  }
+
+  .cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .post-card-body {
+    padding: 24px;
+  }
+
+  .site-footer .footer-inner {
+    padding: 56px 40px 34px;
+  }
+
+  .login-page {
+    padding: 48px;
+  }
+
+  .login-form-card {
+    padding: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-header .header-top {
+    padding: 24px 56px;
+  }
+
+  .site-nav {
+    padding: 12px 56px;
+  }
+
+  .section {
+    padding: 48px 56px;
+  }
+
+  .cards-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
