@@ -8,7 +8,7 @@
     <p class="post-card-tag">{{ post.category.name|upper }}</p>
     <h2 class="post-card-title">
       {% if post.link %}
-        <a href="{{ post.link }}">{{ post.title }}</a>
+        <a href="{{ post.link }}" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
       {% else %}
         {{ post.title }}
       {% endif %}
@@ -17,7 +17,7 @@
       <p class="post-card-description">{{ post.description|truncatewords:25 }}</p>
     {% endif %}
     {% if post.link %}
-      <a href="{{ post.link }}" class="post-card-cta">READ MORE →</a>
+      <a href="{{ post.link }}" class="post-card-cta" target="_blank" rel="noopener noreferrer">READ MORE →</a>
     {% endif %}
   </div>
 </article>
