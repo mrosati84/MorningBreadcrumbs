@@ -1,8 +1,7 @@
 from collections import defaultdict
 
 from django.conf import settings
-from django.http import Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.views import LoginView as AuthLoginView
 
 from web.models import Category, Post
@@ -39,5 +38,19 @@ def home(request):
 
 
 def category_detail(request, slug):
-    """Placeholder: category detail page (skip implementation)."""
-    raise Http404("Category detail not implemented yet.")
+    """Category detail page: all posts in the category, 3-column grid."""
+    category = get_object_or_404(Category, slug=slug)
+    posts = list(
+        Post.objects.filter(category=category)
+        .order_by("-created_at")
+        .select_related("category")
+    )
+    return render(
+        request,
+        "category_detail.html",
+        {
+            "category": category,
+            "posts": posts,
+            "active_category_slug": category.slug,
+        },
+    )

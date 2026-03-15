@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Morning &gt; Breadcrumbs &gt; {{ category.name }}{% endblock %}
+
+{% block header %}
+{% include "partials/header.html" %}
+{% endblock %}
+
+{% block nav %}
+{% include "partials/nav.html" %}
+{% endblock %}
+
+{% block main %}
+<section class="section" aria-labelledby="section-{{ category.slug }}">
+  <div class="section-title-row">
+    <h2 id="section-{{ category.slug }}" class="section-title">{{ category.name|upper }}</h2>
+  </div>
+  <hr class="section-divider">
+  <div class="cards-row">
+    {% for post in posts %}
+      {% include "partials/post_card.html" with post=post %}
+    {% empty %}
+      <p>No posts yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+{% include "partials/footer.html" %}
+{% endblock %}
