@@ -3,19 +3,18 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, final
 
 from django.contrib import admin
-from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from .forms import PostAdminForm
 from .models import Category, Post, Tag
 
 if TYPE_CHECKING:
-    CategoryAdminBase = UnfoldModelAdmin[Category]
-    TagAdminBase = UnfoldModelAdmin[Tag]
-    PostAdminBase = UnfoldModelAdmin[Post]
+    CategoryAdminBase = admin.ModelAdmin[Category]
+    TagAdminBase = admin.ModelAdmin[Tag]
+    PostAdminBase = admin.ModelAdmin[Post]
 else:
-    CategoryAdminBase = UnfoldModelAdmin
-    TagAdminBase = UnfoldModelAdmin
-    PostAdminBase = UnfoldModelAdmin
+    CategoryAdminBase = admin.ModelAdmin
+    TagAdminBase = admin.ModelAdmin
+    PostAdminBase = admin.ModelAdmin
 
 
 @final

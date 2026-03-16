@@ -14,3 +14,6 @@ media/
 
 # ignore env vars
 .env
+
+# collected static files
+static/
