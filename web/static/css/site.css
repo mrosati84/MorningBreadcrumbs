@@ -19,6 +19,10 @@ body {
   color: #000;
 }
 
+:root {
+  --control-height: 40px;
+}
+
 .skip-link {
   position: absolute;
   top: -100%;
@@ -76,7 +80,7 @@ body {
 .site-header .header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   flex-basis: 100%;
   min-width: 0;
 }
@@ -140,6 +144,10 @@ body {
 }
 
 .site-header .search-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
   flex: 1;
   min-width: 0;
 }
@@ -148,7 +156,9 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
+  flex: 1;
+  min-height: var(--control-height);
+  padding: 0 14px;
   border: 1px solid #000;
   border-radius: 4px;
   width: 100%;
@@ -176,40 +186,39 @@ body {
   color: #888;
 }
 
-/* ADMIN / LOGIN: solid black, white text, no border */
+.site-header .btn-search,
 .site-header .btn-admin,
-.site-header .btn-login {
+.site-header .btn-login,
+.site-header .btn-logout,
+.post-card-cta,
+.login-form-submit {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px;
+  min-height: var(--control-height);
+  padding: 0 14px;
   background: #000;
   color: #fff;
   font-family: "DM Mono", monospace;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 1px;
+  line-height: 1;
   text-decoration: none;
   border: none;
   cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* LOGOUT: white fill, black text and thin black border */
 .site-header .btn-logout {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
   background: #fff;
   color: #000;
-  font-family: "DM Mono", monospace;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1px;
   border: 1px solid #000;
-  cursor: pointer;
 }
 
+.site-header .btn-search:hover,
 .site-header .btn-admin:hover,
 .site-header .btn-login:hover,
 .site-header .btn-logout:hover {
@@ -419,17 +428,8 @@ body {
 }
 
 .post-card-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  background: #000;
-  color: #fff;
-  font-family: "DM Mono", monospace;
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-decoration: none;
+  padding-inline: 20px;
   width: fit-content;
 }
 
@@ -530,19 +530,9 @@ body {
 }
 
 .login-form-submit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
-  background: #000;
-  color: #fff;
-  font-family: "DM Mono", monospace;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 1px;
   border: 1px solid #333;
+  padding-inline: 24px;
   width: 100%;
-  cursor: pointer;
 }
 
 .login-form-submit:hover {
@@ -612,7 +602,7 @@ body {
   .site-header .btn-admin,
   .site-header .btn-login,
   .site-header .btn-logout {
-    padding: 10px 20px;
+    padding-inline: 20px;
   }
 
   .site-nav {
