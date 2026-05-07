@@ -1,8 +1,6 @@
 <article class="post-card">
   {% if post.featured_image %}
     <img class="post-card-image" src="{{ post.featured_image.url }}" alt="">
-  {% else %}
-    <div class="post-card-image-wrap" aria-hidden="true"></div>
   {% endif %}
   <div class="post-card-body">
     <p class="post-card-tag">{{ post.category.name|upper }}</p>
