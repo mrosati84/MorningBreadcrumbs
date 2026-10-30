@@ -1,33 +1,20 @@
 {% extends "base.html" %}
-{% load static %}
 
-{% block header %}
-{% include "partials/header.html" %}
-{% endblock %}
-
-{% block nav %}
-{% include "partials/nav.html" %}
-{% endblock %}
+{% block title %}Morning &gt; Breadcrumbs{% if issue and not issue.is_active %} &gt; Issue {{ issue }}{% endif %}{% endblock %}
 
 {% block main %}
-{% for category in categories %}
-<section class="section" aria-labelledby="section-{{ category.slug }}">
-  <div class="section-title-row">
-    <h2 id="section-{{ category.slug }}" class="section-title">{{ category.name|upper }}</h2>
-    <a href="{% url 'web:category' category.slug %}" class="section-see-all">SEE ALL →</a>
-  </div>
-  <hr class="section-divider">
-  <div class="cards-row">
-    {% for post in category.recent_posts %}
-      {% include "partials/post_card.html" with post=post %}
-    {% empty %}
-      <p>No posts yet.</p>
-    {% endfor %}
-  </div>
-</section>
-{% endfor %}
-{% endblock %}
-
-{% block footer %}
-{% include "partials/footer.html" %}
+  {% for section in sections %}
+    <section class="section surface{% if section.category.is_news %} section--news{% endif %}{% if forloop.first %} section--first{% endif %}"
+             aria-labelledby="section-{{ section.category.slug }}" data-stack-item style="--stack-z: {{ forloop.counter }}">
+      <div class="section__inner">
+        {% if section.category.is_news %}
+          {% include "partials/section_news.html" %}
+        {% else %}
+          {% include "partials/section_list.html" %}
+        {% endif %}
+      </div>
+    </section>
+  {% empty %}
+    {% include "partials/empty_state.html" with message="Nothing filed here yet." clear_url=None %}
+  {% endfor %}
 {% endblock %}

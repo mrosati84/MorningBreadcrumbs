@@ -1,5 +1,17 @@
-<div class="footer-inner">
-  <p class="footer-tagline">NEWSLETTER</p>
-  <p class="footer-brand">Morning &gt;<br>Breadcrumbs.</p>
-  <hr class="footer-divider">
-</div>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <p class="footer__quote" data-reveal>Collect small things. Follow them. They always lead somewhere.</p>
+      <div class="footer__logo" data-reveal style="--reveal-delay: 120ms">
+        {% include "partials/logo.html" with modifier="inverse" %}
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© {% now "Y" %} Morning Breadcrumbs</span>
+      <a href="#top" class="footer__top-link hover-link">
+        Back to top
+        <svg class="arrow arrow--up" width="9" height="11" viewBox="0 0 9 11" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M4.5 11V1M0.5 4.5 4.5 0.5l4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>

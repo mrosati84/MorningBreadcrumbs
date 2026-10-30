@@ -1,0 +1,9 @@
+<nav class="tabs surface" aria-label="Categories" data-tabs>
+  <div class="tabs__track" data-tabs-track>
+    {% for tab in tabs %}
+      <a href="{{ tab.url }}" class="tab{% if tab.active %} is-active{% endif %}"{% if tab.active %} aria-current="page"{% endif %}>
+        <span class="tab__label">{{ tab.label }}</span><sup class="tab__count">{{ tab.count|stringformat:"02d" }}</sup>
+      </a>
+    {% endfor %}
+  </div>
+</nav>

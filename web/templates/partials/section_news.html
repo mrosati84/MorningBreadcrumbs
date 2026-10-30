@@ -1,0 +1,41 @@
+{# News: a lead story with a wide image, then a two-column grid of the rest. #}
+{% include "partials/section_head.html" %}
+
+{% with post=section.lead %}
+<article class="lead">
+  {% include "partials/post_link_open.html" with class="lead__link" %}
+    {% include "partials/post_media.html" with shape="wide" %}
+    <div class="lead__body rule" data-reveal>
+      <h3 class="lead__title">{{ post.title }}</h3>
+      <div class="lead__aside">
+        {% if post.description %}<p class="lead__excerpt">{{ post.description }}</p>{% endif %}
+        <span class="meta">{{ post.created_at|date:"d.m.Y" }}</span>
+      </div>
+      {% if post.link %}{% include "partials/icons/arrow_out.html" with large=True class="lead__arrow" %}{% endif %}
+    </div>
+  {% include "partials/post_link_close.html" %}
+</article>
+{% endwith %}
+
+{% if section.rest %}
+<div class="news-grid">
+  {% for post in section.rest %}
+    {% cycle "0ms" "140ms" as delay silent %}
+    <article class="brief">
+      {% include "partials/post_link_open.html" with class="brief__link" %}
+        {% include "partials/post_media.html" with shape="photo" %}
+        <div class="brief__body" data-reveal style="--reveal-delay: {{ delay }}">
+          <div class="brief__meta rule">
+            <span>#{{ forloop.counter|add:1|stringformat:"02d" }}</span>
+            <span>{{ post.created_at|date:"d.m.Y" }}</span>
+          </div>
+          <div class="brief__headline">
+            <h3 class="brief__title">{{ post.title }}</h3>
+            {% if post.link %}{% include "partials/icons/arrow_out.html" with class="brief__arrow" %}{% endif %}
+          </div>
+        </div>
+      {% include "partials/post_link_close.html" %}
+    </article>
+  {% endfor %}
+</div>
+{% endif %}

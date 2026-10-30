@@ -1,0 +1,4 @@
+{% include "partials/section_head.html" %}
+{% for post in section.posts %}
+  {% include "partials/post_row.html" with number=forloop.counter|stringformat:"02d" aside=post.created_at|date:"d.m.Y" %}
+{% endfor %}

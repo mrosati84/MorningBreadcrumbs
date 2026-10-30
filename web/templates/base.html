@@ -1,27 +1,27 @@
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Morning &gt; Breadcrumbs{% endblock %}</title>
-  {% load static %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=DM+Sans:opsz,wght@9..40,500&amp;display=swap">
   <link rel="stylesheet" href="{% static 'css/site.css' %}">
-  {% block extra_head %}{% endblock %}
+  {# Hide reveal targets before first paint; site.js shows them as they scroll in. #}
+  <script>if ("IntersectionObserver" in window) document.documentElement.classList.add("reveal-on");</script>
+  <script src="{% static 'js/site.js' %}" defer></script>
 </head>
-<body>
+<body id="top">
   <a href="#main" class="skip-link">Skip to main content</a>
-  <header class="site-header">
-    {% block header %}{% endblock %}
-    <nav class="site-nav" aria-label="Categories">
-      {% block nav %}{% endblock %}
-    </nav>
-  </header>
-  <main id="main" class="site-main">
-    {% block main %}{% endblock %}
-  </main>
-  <footer class="site-footer">
-    {% block footer %}{% endblock %}
-  </footer>
-  {% block scripts %}{% endblock %}
+  {% include "partials/header.html" %}
+  <div class="stack" data-stack>
+    {% if tabs|length > 1 %}{% include "partials/tabs.html" %}{% endif %}
+    <main id="main" class="stack__body">
+      {% block main %}{% endblock %}
+    </main>
+  </div>
+  {% include "partials/footer.html" %}
+  {% include "partials/issue_archive.html" %}
 </body>
 </html>

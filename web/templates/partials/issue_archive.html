@@ -1,0 +1,39 @@
+{% if issue %}
+<dialog id="issue-archive" class="archive surface" aria-labelledby="archive-title" data-archive tabindex="-1">
+  <div class="archive__inner">
+    <div class="masthead__bar">
+      {% include "partials/logo.html" %}
+      <button type="button" class="bracket-button" data-archive-close aria-label="Close issues">
+        <span class="bracket bracket--left" aria-hidden="true">[</span>
+        <span class="bracket-button__label">Close</span>
+        {% include "partials/icons/close.html" with size=9 %}
+        <span class="bracket bracket--right" aria-hidden="true">]</span>
+      </button>
+    </div>
+    <div class="masthead__status"></div>
+    <div class="masthead__title">
+      <h2 id="archive-title" class="masthead__heading">All issues</h2>
+      <span class="issue-number">{{ issue }}</span>
+    </div>
+
+    <div class="archive__grid">
+      {% for archived in issue_archive %}
+        <a href="{{ archived.get_absolute_url }}" style="--i: {{ forloop.counter0 }}"
+           class="archive-cell hover-link{% if archived.pk == issue.pk %} is-current{% endif %}"
+           {% if archived.pk == issue.pk %}aria-current="page"{% endif %}
+           aria-label="Issue {{ archived.number }}, {{ archived.published_on|date:'d.m.Y' }}">
+          <span class="archive-cell__meta">
+            <span>{{ archived.published_on|date:"d.m.Y" }}</span>
+            <span class="archive-cell__tag">{% if archived.is_active %}Latest{% elif archived.pk == issue.pk %}Viewing{% endif %}</span>
+          </span>
+          <span class="archive-cell__head">
+            <span class="archive-cell__number">{{ archived }}<span class="archive-cell__dot" aria-hidden="true"></span></span>
+            {% include "partials/icons/arrow_out.html" %}
+          </span>
+          <span class="archive-cell__subject">{{ archived.subject }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</dialog>
+{% endif %}

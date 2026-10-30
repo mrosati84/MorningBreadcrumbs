@@ -1,26 +1,46 @@
-<div class="header-top">
-  <a href="{% url 'web:home' %}" class="logo">
-    <span class="logo-inner">Morning &gt; Breadcrumbs</span>
-  </a>
-  <div class="header-right">
-    <form action="{% url 'web:search' %}" method="get" class="search-form" role="search">
-      <label for="search-input" class="visually-hidden">Search</label>
-      <div class="search-wrap">
-        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="search-input" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search..." aria-label="Search">
-      </div>
-      <button type="submit" class="btn-search">SEARCH</button>
-    </form>
-    <div class="auth-row">
-      {% if user.is_authenticated %}
-        <a href="{% url 'admin:index' %}" class="btn-admin">ADMIN</a>
-        <form method="post" action="{% url 'logout' %}">
-          {% csrf_token %}
-          <button type="submit" class="btn-logout">LOGOUT</button>
-        </form>
-      {% else %}
-        <a href="{% url 'login' %}" class="btn-login">LOGIN</a>
-      {% endif %}
+<header class="masthead">
+  <div class="masthead__bar">
+    <a href="{% url 'web:home' %}" class="masthead__home" aria-label="Morning Breadcrumbs — home">
+      {% include "partials/logo.html" %}
+    </a>
+    <div class="masthead__search">
+      <form action="{% url 'web:search' %}" method="get" role="search"
+            class="search{% if query %} is-filled{% endif %}" data-search
+            {% if query %}data-search-exit="{{ clear_url }}"{% endif %}>
+        <span class="bracket bracket--left" aria-hidden="true">[</span>
+        <label for="search-input" class="visually-hidden">Search</label>
+        <input id="search-input" class="search__input" type="search" name="q" value="{{ query }}"
+               placeholder="Search" enterkeyhint="search" autocomplete="off">
+        <button type="button" class="search__close" aria-label="Close search" data-search-close>
+          {% include "partials/icons/close.html" %}
+        </button>
+        <span class="bracket bracket--right" aria-hidden="true">]</span>
+      </form>
     </div>
   </div>
-</div>
+
+  <div class="masthead__status">
+    {% if issue and not issue.is_active %}
+      <span class="masthead__viewing">
+        Viewing issue {{ issue }} — {{ issue.published_on|date:"d.m.Y" }} · {{ entry_count|stringformat:"02d" }} entries
+      </span>
+      <a href="{% url 'web:home' %}" class="masthead__back">
+        Back to latest issue {% include "partials/icons/close.html" %}
+      </a>
+    {% elif updated_at %}
+      <span class="masthead__updated">Updated {{ updated_at|date:"d.m.Y" }}</span>
+    {% endif %}
+  </div>
+
+  <div class="masthead__title">
+    <h1 class="masthead__heading" data-reveal>Morning &gt; Breadcrumbs</h1>
+    {% if issue %}
+      <div class="masthead__issue" data-reveal style="--reveal-delay: 150ms">
+        <button type="button" class="issue-number" data-archive-open
+                aria-haspopup="dialog" aria-controls="issue-archive"
+                aria-label="Issue {{ issue.number }} — open all issues">{{ issue }}</button>
+        <span class="live-dot" aria-hidden="true"></span>
+      </div>
+    {% endif %}
+  </div>
+</header>
