@@ -463,6 +463,10 @@ button.issue-number:hover {
   z-index: var(--stack-z, 1);
 }
 
+.stack-on [data-stack-item][data-stack-tall] {
+  position: relative;
+}
+
 /* ------------------------------------------------------------------ */
 /* Category tabs                                                       */
 /* ------------------------------------------------------------------ */

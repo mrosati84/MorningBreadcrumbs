@@ -75,9 +75,9 @@
 
   /* Stacking sections ------------------------------------------------ */
 
-  // Each section sticks once its bottom reaches the bottom of the viewport
-  // (or just below the category bar when it is shorter than the screen),
-  // so the next section slides over it like a card.
+  // Each section that fits below the category bar sticks just under it, so
+  // the next section slides over it like a card. Taller sections scroll
+  // normally: freezing them would leave their top cut off under the bar.
   function initStack() {
     const stack = document.querySelector("[data-stack]");
     const items = stack ? [...stack.querySelectorAll("[data-stack-item]")] : [];
@@ -93,8 +93,9 @@
       queued = false;
       const navHeight = nav ? nav.offsetHeight : 0;
       const viewport = window.innerHeight;
+      const top = navHeight - TUCK;
       for (const item of items) {
-        const top = Math.round(Math.min(navHeight - TUCK, viewport - item.offsetHeight));
+        item.toggleAttribute("data-stack-tall", item.offsetHeight > viewport - top);
         item.style.setProperty("--stack-top", `${top}px`);
       }
       root.classList.add("stack-on");
