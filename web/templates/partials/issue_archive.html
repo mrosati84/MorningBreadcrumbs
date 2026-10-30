@@ -2,7 +2,9 @@
 <dialog id="issue-archive" class="archive surface" aria-labelledby="archive-title" data-archive tabindex="-1">
   <div class="archive__inner">
     <div class="masthead__bar">
-      {% include "partials/logo.html" %}
+      <a href="{% url 'web:home' %}" class="masthead__home" aria-label="Morning Breadcrumbs — home">
+        {% include "partials/logo.html" %}
+      </a>
       <button type="button" class="bracket-button" data-archive-close aria-label="Close issues">
         <span class="bracket bracket--left" aria-hidden="true">[</span>
         <span class="bracket-button__label">Close</span>

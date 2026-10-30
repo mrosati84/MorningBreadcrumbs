@@ -139,6 +139,13 @@ class IssuePageTests(TestCase):
         self.assertContains(response, 'href="/issues/1/"')
         self.assertContains(response, "Latest")
 
+    def test_logo_links_home_in_header_and_issue_archive(self) -> None:
+        response = self.client.get(reverse("web:issue", args=[1]))
+
+        self.assertContains(
+            response, f'<a href="{reverse("web:home")}" class="masthead__home"', count=2
+        )
+
     def test_home_without_issues_renders_empty_state(self) -> None:
         _ = Post.objects.all().delete()
         _ = Issue.objects.all().delete()
