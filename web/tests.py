@@ -18,7 +18,7 @@ from PIL import Image
 from django.urls import NoReverseMatch, reverse
 
 from web.models import Category, Issue, Post
-from web.views import Section
+from web.views import Section, Tab
 
 
 def create_post(issue: Issue, category: Category, title: str, link: str = "") -> None:
@@ -153,6 +153,55 @@ class IssuePageTests(TestCase):
         response = self.client.get(reverse("web:home"))
 
         self.assertContains(response, "Nothing filed here yet.")
+
+
+class AllTabPreviewTests(TestCase):
+    news: ClassVar[Category]
+    design: ClassVar[Category]
+
+    @classmethod
+    @override
+    def setUpTestData(cls) -> None:
+        issue = Issue.objects.create(
+            number=1, published_on=date(2026, 10, 1), is_active=True
+        )
+        cls.news = Category.objects.create(name="News")
+        cls.design = Category.objects.create(name="Design")
+        for n in range(5):
+            create_post(issue, cls.news, f"News {n}")
+        for n in range(6):
+            create_post(issue, cls.design, f"Design {n}")
+
+    def sections(self, **params: str) -> dict[str, Section]:
+        response = self.client.get(reverse("web:home"), params)
+        sections = cast(list[Section], response.context["sections"])
+        return {section.category.name: section for section in sections}
+
+    def test_all_tab_shows_three_news_and_four_per_category(self) -> None:
+        sections = self.sections()
+
+        self.assertEqual(len(sections["News"].posts), 3)
+        self.assertEqual(len(sections["Design"].posts), 4)
+        # Section headers still count every entry of the category.
+        self.assertEqual(sections["News"].total, 5)
+        self.assertEqual(sections["Design"].total, 6)
+
+    def test_previews_show_the_most_recent_posts(self) -> None:
+        shown = [post.title for post in self.sections()["Design"].posts]
+
+        self.assertEqual(shown, ["Design 5", "Design 4", "Design 3", "Design 2"])
+
+    def test_tab_counts_are_not_limited(self) -> None:
+        response = self.client.get(reverse("web:home"))
+        counts = {
+            tab.label: tab.count for tab in cast(list[Tab], response.context["tabs"])
+        }
+
+        self.assertEqual(counts, {"All": 11, "News": 5, "Design": 6})
+
+    def test_category_tab_shows_every_entry(self) -> None:
+        self.assertEqual(len(self.sections(c=self.news.slug)["News"].posts), 5)
+        self.assertEqual(len(self.sections(c=self.design.slug)["Design"].posts), 6)
 
 
 class SearchTests(TestCase):

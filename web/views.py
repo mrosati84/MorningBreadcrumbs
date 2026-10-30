@@ -16,6 +16,11 @@ from web.models import Category, Issue, Post
 
 CATEGORY_PARAM = "c"
 
+# How many posts each section shows under the "All" tab; a category's own tab
+# shows all of them.
+ALL_TAB_NEWS_LIMIT = 3
+ALL_TAB_SECTION_LIMIT = 4
+
 
 @dataclass(frozen=True)
 class Tab:
@@ -32,7 +37,8 @@ class Section:
     """The posts of one category inside an issue."""
 
     category: Category
-    posts: list[Post]
+    posts: list[Post]  # the posts shown, possibly a preview of the category
+    total: int  # how many posts the category has in the issue
 
     @property
     def lead(self) -> Post:
@@ -95,13 +101,21 @@ def _category_tabs(
     return tabs, selected
 
 
-def _sections(posts: list[Post]) -> list[Section]:
+def _section_limit(category: Category) -> int:
+    return ALL_TAB_NEWS_LIMIT if category.is_news else ALL_TAB_SECTION_LIMIT
+
+
+def _sections(posts: list[Post], *, preview: bool) -> list[Section]:
+    """Group posts by category; with `preview`, cut each section to its limit."""
     grouped: dict[int, list[Post]] = {}
     for post in posts:
         grouped.setdefault(post.category.id, []).append(post)
-    sections = [
-        Section(category=group[0].category, posts=group) for group in grouped.values()
-    ]
+
+    sections: list[Section] = []
+    for group in grouped.values():
+        category = group[0].category
+        shown = group[: _section_limit(category)] if preview else group
+        sections.append(Section(category=category, posts=shown, total=len(group)))
     return sorted(sections, key=lambda section: _category_order(section.category))
 
 
@@ -136,7 +150,7 @@ def _render_issue(request: HttpRequest, issue: Issue | None) -> HttpResponse:
             "entry_count": len(posts),
             "tabs": tabs,
             "selected_category": selected,
-            "sections": _sections(visible),
+            "sections": _sections(visible, preview=selected is None),
             "clear_url": base_url,
         },
     )
