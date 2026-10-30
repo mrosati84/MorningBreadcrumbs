@@ -8,7 +8,8 @@
       "link": "https://www.smashingmagazine.com/2026/09/accessible-color-contrast-guide/",
       "created_at": "2026-10-29T08:15:00Z",
       "category": 1,
-      "tags": [1, 2, 11]
+      "tags": [1, 2, 11],
+      "issue": 2
     }
   },
   {
@@ -20,7 +21,8 @@
       "link": "https://alistapart.com/article/designing-empty-states/",
       "created_at": "2026-10-27T09:40:00Z",
       "category": 1,
-      "tags": [11]
+      "tags": [11],
+      "issue": 2
     }
   },
   {
@@ -32,7 +34,8 @@
       "link": "https://typewolf.com/editorial/serif-ui-trend",
       "created_at": "2026-10-22T07:05:00Z",
       "category": 1,
-      "tags": [10]
+      "tags": [10],
+      "issue": 2
     }
   },
   {
@@ -44,7 +47,8 @@
       "link": "https://docs.djangoproject.com/en/6.0/releases/6.0/",
       "created_at": "2026-10-28T10:20:00Z",
       "category": 2,
-      "tags": [3, 8]
+      "tags": [3, 8],
+      "issue": 2
     }
   },
   {
@@ -56,7 +60,8 @@
       "link": "https://pganalyze.com/blog/postgres-trigram-search",
       "created_at": "2026-10-24T11:00:00Z",
       "category": 2,
-      "tags": [6, 3]
+      "tags": [6, 3],
+      "issue": 2
     }
   },
   {
@@ -68,7 +73,8 @@
       "link": "https://web.dev/articles/modern-css-layout",
       "created_at": "2026-10-19T08:30:00Z",
       "category": 2,
-      "tags": [2]
+      "tags": [2],
+      "issue": 2
     }
   },
   {
@@ -80,7 +86,8 @@
       "link": "https://testdriven.io/blog/django-testing-strategy/",
       "created_at": "2026-10-14T14:10:00Z",
       "category": 2,
-      "tags": [3, 9, 8]
+      "tags": [3, 9, 8],
+      "issue": 2
     }
   },
   {
@@ -92,7 +99,8 @@
       "link": "https://www.django-news.com/issues/webp-avif-without-cdn",
       "created_at": "2026-10-09T09:00:00Z",
       "category": 2,
-      "tags": [12, 5, 3]
+      "tags": [12, 5, 3],
+      "issue": 2
     }
   },
   {
@@ -104,7 +112,8 @@
       "link": "https://www.lennysnewsletter.com/p/shipping-smaller",
       "created_at": "2026-10-26T07:45:00Z",
       "category": 3,
-      "tags": [11, 7]
+      "tags": [11, 7],
+      "issue": 2
     }
   },
   {
@@ -116,7 +125,8 @@
       "link": "https://www.nngroup.com/articles/lightweight-user-research/",
       "created_at": "2026-10-18T13:25:00Z",
       "category": 3,
-      "tags": [11]
+      "tags": [11],
+      "issue": 2
     }
   },
   {
@@ -128,7 +138,8 @@
       "link": "https://amplitude.com/blog/metrics-that-last",
       "created_at": "2026-10-05T10:05:00Z",
       "category": 3,
-      "tags": [7]
+      "tags": [7],
+      "issue": 2
     }
   },
   {
@@ -140,7 +151,8 @@
       "link": "https://www.oreilly.com/library/view/the-staff-engineers/9781098118723/",
       "created_at": "2026-10-21T06:50:00Z",
       "category": 4,
-      "tags": [7, 8]
+      "tags": [7, 8],
+      "issue": 2
     }
   },
   {
@@ -152,7 +164,8 @@
       "link": "https://calnewport.com/deep-work-in-a-notification-world/",
       "created_at": "2026-10-11T08:00:00Z",
       "category": 4,
-      "tags": [7]
+      "tags": [7],
+      "issue": 2
     }
   },
   {
@@ -164,7 +177,8 @@
       "link": "https://blog.jim-nielsen.com/2026/reading-code-like-literature/",
       "created_at": "2026-09-30T09:15:00Z",
       "category": 4,
-      "tags": [8, 7]
+      "tags": [8, 7],
+      "issue": 1
     }
   },
   {
@@ -176,7 +190,8 @@
       "link": "https://docs.docker.com/compose/how-tos/startup-order/",
       "created_at": "2026-10-23T12:35:00Z",
       "category": 5,
-      "tags": [4, 6]
+      "tags": [4, 6],
+      "issue": 2
     }
   },
   {
@@ -188,7 +203,8 @@
       "link": "https://docs.astral.sh/uv/guides/migration/",
       "created_at": "2026-09-25T10:45:00Z",
       "category": 5,
-      "tags": [8, 9, 7]
+      "tags": [8, 9, 7],
+      "issue": 1
     }
   },
   {
@@ -200,7 +216,8 @@
       "link": "https://www.crunchydata.com/blog/why-psql",
       "created_at": "2026-09-18T07:20:00Z",
       "category": 5,
-      "tags": [6, 7]
+      "tags": [6, 7],
+      "issue": 1
     }
   },
   {
@@ -212,7 +229,60 @@
       "link": "https://www.smashingmagazine.com/2026/08/image-optimisation-pipeline/",
       "created_at": "2026-09-12T15:00:00Z",
       "category": 1,
-      "tags": [12, 5]
+      "tags": [12, 5],
+      "issue": 1
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 19,
+    "fields": {
+      "title": "Django 6.1 enters beta with async ORM improvements",
+      "description": "The first beta ships with broader async support in the ORM, a reworked template engine cache and a long list of deprecations to plan for.",
+      "link": "https://www.djangoproject.com/weblog/",
+      "created_at": "2026-10-29T07:30:00Z",
+      "category": 6,
+      "tags": [3, 8],
+      "issue": 2
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 20,
+    "fields": {
+      "title": "Interop 2026 wraps up: what landed in every browser",
+      "description": "Anchor positioning, view transitions and the remaining :has() edge cases are now consistent across engines. A short tour of what you can ship today.",
+      "link": "https://web.dev/blog/",
+      "created_at": "2026-10-25T09:00:00Z",
+      "category": 6,
+      "tags": [2],
+      "issue": 2
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 21,
+    "fields": {
+      "title": "PostgreSQL 19 release candidate is out",
+      "description": "Faster planning for partitioned tables, incremental sort everywhere and a new built-in UUIDv7 function headline the release candidate.",
+      "link": "https://www.postgresql.org/about/news/",
+      "created_at": "2026-10-16T12:00:00Z",
+      "category": 6,
+      "tags": [6, 5],
+      "issue": 2
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 22,
+    "fields": {
+      "title": "Variable fonts arrive in default UI kits",
+      "description": "What the change means for interface typography, and what it leaves untouched.",
+      "link": "https://fonts.google.com/knowledge",
+      "created_at": "2026-09-20T08:00:00Z",
+      "category": 6,
+      "tags": [10],
+      "issue": 1
     }
   }
 ]

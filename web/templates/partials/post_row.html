@@ -1,0 +1,10 @@
+{# One post as a list row: `number` fills the first column, `aside` the third. #}
+{% include "partials/post_link_open.html" with class="row" attrs="data-reveal" %}
+  <span class="row__marker">#{{ number }}</span>
+  <span class="row__text">
+    <span class="row__title">{{ post.title }}</span>
+    {% if post.description %}<span class="row__excerpt">{{ post.description|truncatewords:40 }}</span>{% endif %}
+  </span>
+  <span class="row__aside{% if aside_strong %} row__aside--strong{% endif %}">{{ aside }}</span>
+  {% if post.link %}{% include "partials/icons/arrow_out.html" with class="row__arrow" %}{% endif %}
+{% include "partials/post_link_close.html" %}

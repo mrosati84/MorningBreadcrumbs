@@ -98,7 +98,7 @@ TEMPLATES: list[dict[str, str | bool | list[str] | dict[str, list[str]]]] = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "web.context_processors.categories",
+                "web.context_processors.issue_archive",
             ],
         },
     },
@@ -171,10 +171,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 # MEDIA_CACHE_MAX_AGE = 86400
 
 # Post image optimization (applied on upload via web.image_processing)
-POST_IMAGE_MAX_SIZE = int(os.getenv("POST_IMAGE_MAX_SIZE", "400"))  # longest side in px
+# 1600px covers the widest layout slot (the News lead image, ~1330 CSS px).
+POST_IMAGE_MAX_SIZE = int(
+    os.getenv("POST_IMAGE_MAX_SIZE", "1600")
+)  # longest side in px
 POST_IMAGE_WEBP_QUALITY = int(os.getenv("POST_IMAGE_WEBP_QUALITY", "85"))  # 0–100
-
-# Auth
-LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "/accounts/login/"
-LOGOUT_REDIRECT_URL = "/"

@@ -14,7 +14,7 @@ from PIL import Image, ImageOps
 
 
 def _max_size() -> int:
-    return getattr(settings, "POST_IMAGE_MAX_SIZE", 1200)
+    return getattr(settings, "POST_IMAGE_MAX_SIZE", 1600)
 
 
 def _webp_quality() -> int:

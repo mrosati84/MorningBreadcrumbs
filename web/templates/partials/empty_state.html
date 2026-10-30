@@ -1,0 +1,7 @@
+<section class="empty surface">
+  <div class="empty__inner">
+    <span class="meta">00 {{ noun|default:"entries" }}</span>
+    <p class="empty__message">{{ message }}</p>
+    {% if clear_url %}<a href="{{ clear_url }}" class="empty__clear">Clear filters</a>{% endif %}
+  </div>
+</section>

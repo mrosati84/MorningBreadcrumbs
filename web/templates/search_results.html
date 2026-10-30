@@ -1,42 +1,28 @@
 {% extends "base.html" %}
-{% load static %}
 
-{% block title %}Morning &gt; Breadcrumbs &gt; Search{% if query %} &gt; {{ query }}{% endif %}{% endblock %}
-
-{% block header %}
-{% include "partials/header.html" %}
-{% endblock %}
-
-{% block nav %}
-{% include "partials/nav.html" %}
-{% endblock %}
+{% block title %}Morning &gt; Breadcrumbs &gt; Search &gt; {{ query }}{% endblock %}
 
 {% block main %}
-<section class="section" aria-labelledby="search-results-heading">
-  <div class="section-title-row">
-    <h2 id="search-results-heading" class="section-title">
-      {% if query %}
-        Results for: {{ query }}
-      {% else %}
-        Search
-      {% endif %}
-    </h2>
-  </div>
-  <hr class="section-divider">
-  <div class="cards-row">
-    {% for post in posts %}
-      {% include "partials/post_card.html" with post=post %}
-    {% empty %}
-      {% if query %}
-        <p class="search-empty">No posts match “{{ query }}”. Try a different keyword or check the spelling.</p>
-      {% else %}
-        <p class="search-empty">Enter a keyword above to search posts by title or description.</p>
-      {% endif %}
-    {% endfor %}
-  </div>
-</section>
-{% endblock %}
-
-{% block footer %}
-{% include "partials/footer.html" %}
+  {% if results %}
+    <section class="section section--first results surface" aria-labelledby="results-title">
+      <div class="section__inner">
+        <div class="section__head">
+          <div class="results__heading">
+            <span class="meta">Search results{% if selected_category %} · {{ selected_category.name }}{% endif %}</span>
+            <h2 id="results-title" class="section__title results__query" data-reveal>“{{ query }}”</h2>
+          </div>
+          <span class="meta results__count">{{ results|length|stringformat:"02d" }} results</span>
+        </div>
+        {% for post in results %}
+          {% with aside="[ "|add:post.category.name|add:" ]" %}
+            {% include "partials/post_row.html" with number=post.issue.number|stringformat:"03d" aside_strong=True %}
+          {% endwith %}
+        {% endfor %}
+      </div>
+    </section>
+  {% else %}
+    {% with message="No results for “"|add:query|add:"”." %}
+      {% include "partials/empty_state.html" with noun="results" %}
+    {% endwith %}
+  {% endif %}
 {% endblock %}

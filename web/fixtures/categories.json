@@ -38,5 +38,13 @@
       "name": "Tools",
       "slug": "tools"
     }
+  },
+  {
+    "model": "web.category",
+    "pk": 6,
+    "fields": {
+      "name": "News",
+      "slug": "news"
+    }
   }
 ]

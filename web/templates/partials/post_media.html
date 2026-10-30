@@ -1,0 +1,10 @@
+{# Image frame; posts without a featured image get a crossed placeholder. #}
+<div class="media media--{{ shape }}">
+  <div class="media__fill" data-reveal="img"{% if delay %} style="--reveal-delay: {{ delay }}"{% endif %}>
+    {% if post.featured_image %}
+      <img class="media__image" src="{{ post.featured_image.url }}" alt="" loading="lazy" decoding="async">
+    {% else %}
+      <svg class="media__placeholder" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L100 100M100 0L0 100" vector-effect="non-scaling-stroke"/></svg>
+    {% endif %}
+  </div>
+</div>

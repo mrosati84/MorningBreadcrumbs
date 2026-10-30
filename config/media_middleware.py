@@ -1,10 +1,10 @@
 """
-Middleware to serve user-uploaded media files in production.
+Middleware to serve user-uploaded media files.
 
 WhiteNoise only serves static files (from STATIC_ROOT) and does not serve
 MEDIA_ROOT, and it only indexes at startup so it's unsuitable for uploads.
-This middleware serves files from MEDIA_ROOT when DEBUG is False so that
-media URLs work without requiring a separate web server (e.g. Nginx).
+This middleware serves files from MEDIA_ROOT (in development and production
+alike) so that media URLs work without a separate web server (e.g. Nginx).
 
 Supports HTTP caching via Cache-Control, ETag, and Last-Modified so browsers
 and reverse proxies can cache responses and conditional requests return 304.
@@ -12,9 +12,10 @@ and reverse proxies can cache responses and conditional requests return 304.
 
 import mimetypes
 from pathlib import Path
+from typing import cast
 
 from django.conf import settings
-from django.http import FileResponse, HttpResponseNotModified
+from django.http import FileResponse, HttpRequest, HttpResponseNotModified
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.http import http_date, quote_etag
 
@@ -26,19 +27,19 @@ def _make_etag(st_mtime_ns: int, st_size: int) -> str:
 
 class MediaMiddleware(MiddlewareMixin):
     """
-    Serve files from MEDIA_ROOT at MEDIA_URL when DEBUG is False.
+    Serve files from MEDIA_ROOT at MEDIA_URL.
     Safe against path traversal by resolving paths and ensuring they stay under MEDIA_ROOT.
     Sets Cache-Control, ETag, and Last-Modified for HTTP caching and 304 responses.
     """
 
-    def process_request(self, request):
-        if settings.DEBUG:
-            return None
+    def process_request(
+        self, request: HttpRequest
+    ) -> FileResponse | HttpResponseNotModified | None:
         if request.method not in ("GET", "HEAD"):
             return None
 
         path = request.path.lstrip("/")
-        media_url = (settings.MEDIA_URL or "").strip("/")
+        media_url = (cast(str | None, settings.MEDIA_URL) or "").strip("/")
         if not media_url or not path.startswith(media_url + "/"):
             return None
 
@@ -47,7 +48,7 @@ class MediaMiddleware(MiddlewareMixin):
         if not rel_path:
             return None
 
-        media_root = Path(settings.MEDIA_ROOT).resolve()
+        media_root = Path(cast(str | Path, settings.MEDIA_ROOT)).resolve()
         # Resolve the requested path and ensure it stays under MEDIA_ROOT
         try:
             file_path = (media_root / rel_path).resolve()
@@ -67,10 +68,10 @@ class MediaMiddleware(MiddlewareMixin):
         last_modified = http_date(stat.st_mtime)
 
         # Conditional request: return 304 if the client has a valid cached copy
-        if_none_match = request.META.get("HTTP_IF_NONE_MATCH", "").strip()
+        if_none_match = request.headers.get("If-None-Match", "").strip()
         if if_none_match and etag in (t.strip() for t in if_none_match.split(",")):
             return HttpResponseNotModified()
-        if_modified_since = request.META.get("HTTP_IF_MODIFIED_SINCE", "").strip()
+        if_modified_since = request.headers.get("If-Modified-Since", "").strip()
         if if_modified_since and if_modified_since == last_modified:
             return HttpResponseNotModified()
 
@@ -80,11 +81,11 @@ class MediaMiddleware(MiddlewareMixin):
             content_type=content_type or "application/octet-stream",
             as_attachment=False,
         )
-        response["Content-Length"] = stat.st_size
+        response["Content-Length"] = str(stat.st_size)
         response["ETag"] = etag
         response["Last-Modified"] = last_modified
 
-        max_age = getattr(settings, "MEDIA_CACHE_MAX_AGE", 86400)  # default 1 day
+        max_age: int = getattr(settings, "MEDIA_CACHE_MAX_AGE", 86400)  # default 1 day
         response["Cache-Control"] = f"public, max-age={max_age}"
 
         return response

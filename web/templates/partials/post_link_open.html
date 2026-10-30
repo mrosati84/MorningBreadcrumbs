@@ -1,0 +1,2 @@
+{# Opening tag of a post's clickable area: an external link when the post has one. #}
+{% if post.link %}<a href="{{ post.link }}" class="{{ class }} hover-link" target="_blank" rel="noopener noreferrer"{% if attrs %} {{ attrs }}{% endif %}>{% else %}<div class="{{ class }}"{% if attrs %} {{ attrs }}{% endif %}>{% endif %}

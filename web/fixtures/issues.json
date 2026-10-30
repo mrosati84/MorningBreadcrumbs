@@ -1,0 +1,22 @@
+[
+  {
+    "model": "web.issue",
+    "pk": 1,
+    "fields": {
+      "number": 1,
+      "published_on": "2026-09-01",
+      "subject": "Issue one: collect small things",
+      "is_active": false
+    }
+  },
+  {
+    "model": "web.issue",
+    "pk": 2,
+    "fields": {
+      "number": 2,
+      "published_on": "2026-10-01",
+      "subject": "Contrast, empty states and a smaller roadmap",
+      "is_active": true
+    }
+  }
+]
