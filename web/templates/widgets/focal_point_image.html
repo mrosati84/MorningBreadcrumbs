@@ -1,0 +1,21 @@
+{% include "admin/widgets/clearable_file_input.html" %}
+<div class="focal" data-focal data-x-field="{{ focal.x_field }}" data-y-field="{{ focal.y_field }}" data-src="{{ focal.image_url }}"{% if not focal.image_url %} hidden{% endif %}>
+  <p class="focal__help">Click or drag on the image to choose the point to keep in frame. Arrow keys nudge it.</p>
+  <div class="focal__layout">
+    <div class="focal__stage" tabindex="0" role="slider" aria-label="Image focal point">
+      <img class="focal__image" alt="" draggable="false"{% if focal.image_url %} src="{{ focal.image_url }}"{% endif %}>
+      <span class="focal__marker" aria-hidden="true"></span>
+    </div>
+    <div class="focal__previews">
+      {% for label, ratio in focal.ratios %}
+        <figure class="focal__preview">
+          <div class="focal__frame" style="aspect-ratio: {{ ratio }}">
+            <img alt=""{% if focal.image_url %} src="{{ focal.image_url }}"{% endif %}>
+          </div>
+          <figcaption>{{ label }} <span>{{ ratio|cut:" " }}</span></figcaption>
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+  <button type="button" class="focal__reset">Reset to center</button>
+</div>

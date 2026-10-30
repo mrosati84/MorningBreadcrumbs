@@ -6,6 +6,7 @@ from io import BytesIO
 from pathlib import Path
 from typing import ClassVar, cast, override
 
+from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
 from django.db import IntegrityError, connection, transaction
@@ -17,6 +18,7 @@ from django.test import TestCase, TransactionTestCase, override_settings
 from PIL import Image
 from django.urls import NoReverseMatch, reverse
 
+from web.forms import PostAdminForm
 from web.models import Category, Issue, Post
 from web.views import Section, Tab
 
@@ -263,6 +265,86 @@ class FeaturedImageOptimizationTests(TestCase):
             self.assertEqual(files, ["photo.webp"])
             with Image.open(Path(media_root) / "posts" / "photo.webp") as optimized:
                 self.assertEqual(optimized.size, (1600, 800))
+
+
+class FocalPointTests(TestCase):
+    issue: ClassVar[Issue]
+    category: ClassVar[Category]
+
+    @classmethod
+    @override
+    def setUpTestData(cls) -> None:
+        cls.issue = Issue.objects.create(
+            number=1, published_on=date(2026, 9, 1), is_active=True
+        )
+        cls.category = Category.objects.create(name="News")
+
+    def _post_with_image(self, media_root: str, **fields: int) -> Post:
+        buffer = BytesIO()
+        Image.new("RGB", (40, 20), "orange").save(buffer, "WEBP")
+        upload = SimpleUploadedFile("photo.webp", buffer.getvalue(), "image/webp")
+        with override_settings(MEDIA_ROOT=media_root):
+            return Post.objects.create(
+                issue=self.issue,
+                category=self.category,
+                title="Photo",
+                featured_image=upload,
+                **fields,
+            )
+
+    def test_new_posts_default_to_the_center(self) -> None:
+        post = Post.objects.create(
+            issue=self.issue, category=self.category, title="Plain"
+        )
+        self.assertEqual(post.object_position, "50% 50%")
+
+    def test_front_end_crops_around_the_focal_point(self) -> None:
+        with tempfile.TemporaryDirectory() as media_root:
+            _ = self._post_with_image(media_root, focal_x=20, focal_y=75)
+            with override_settings(MEDIA_ROOT=media_root):
+                response = self.client.get(reverse("web:home"))
+        self.assertContains(response, 'style="object-position: 20% 75%"')
+
+    def test_admin_shows_the_picker_and_saves_the_point(self) -> None:
+        user = User.objects.create_superuser("admin", "admin@example.com", "pw")
+        self.client.force_login(user)
+        with (
+            tempfile.TemporaryDirectory() as media_root,
+            override_settings(MEDIA_ROOT=media_root),
+        ):
+            post = self._post_with_image(media_root)
+            url = reverse("admin:web_post_change", args=[post.id])
+            response = self.client.get(url)
+            self.assertContains(response, "data-focal")
+            self.assertContains(response, 'type="hidden" name="focal_x" value="50"')
+            self.assertContains(response, "js/focal_point.js")
+
+            response = self.client.post(
+                url,
+                {
+                    "title": post.title,
+                    "issue": self.issue.id,
+                    "category": self.category.id,
+                    "focal_x": 10,
+                    "focal_y": 90,
+                },
+            )
+            self.assertEqual(response.status_code, 302)
+            post.refresh_from_db()
+            self.assertEqual((post.focal_x, post.focal_y), (10, 90))
+
+    def test_point_outside_the_image_is_rejected(self) -> None:
+        form = PostAdminForm(
+            data={
+                "title": "Photo",
+                "issue": self.issue.id,
+                "category": self.category.id,
+                "focal_x": 101,
+                "focal_y": 50,
+            }
+        )
+        self.assertFalse(form.is_valid())
+        self.assertIn("focal_x", form.errors)
 
 
 class LoginRemovedTests(TestCase):
