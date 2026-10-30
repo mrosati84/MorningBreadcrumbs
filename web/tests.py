@@ -90,6 +90,13 @@ class IssuePageTests(TestCase):
         self.assertNotContains(response, "Archived design post")
         self.assertContains(response, "#002")
 
+    def test_no_template_syntax_leaks_into_the_page(self) -> None:
+        # Django's {# #} comments are single-line: a multi-line one renders as text.
+        response = self.client.get(reverse("web:home"))
+
+        for marker in ("{#", "#}", "{%", "%}", "{{", "}}"):
+            self.assertNotContains(response, marker)
+
     def test_news_section_comes_first_with_featured_layout(self) -> None:
         response = self.client.get(reverse("web:home"))
 
