@@ -84,6 +84,9 @@
     if (!items.length) return;
 
     const nav = stack.querySelector("[data-tabs]");
+    // Sections stick a little under the category bar so their thick top rule
+    // tucks behind it instead of doubling up with the bar's own rule.
+    const TUCK = 5;
     let queued = false;
 
     const measure = () => {
@@ -91,7 +94,7 @@
       const navHeight = nav ? nav.offsetHeight : 0;
       const viewport = window.innerHeight;
       for (const item of items) {
-        const top = Math.round(Math.min(navHeight, viewport - item.offsetHeight));
+        const top = Math.round(Math.min(navHeight - TUCK, viewport - item.offsetHeight));
         item.style.setProperty("--stack-top", `${top}px`);
       }
       root.classList.add("stack-on");

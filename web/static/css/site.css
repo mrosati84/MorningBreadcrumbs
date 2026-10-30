@@ -527,7 +527,7 @@ button.issue-number:hover {
 .section__inner {
   max-width: var(--content);
   margin: 0 auto;
-  padding-bottom: 112px;
+  padding-bottom: 192px;
   border-top: var(--rule-thick) solid var(--ink);
 }
 
@@ -627,7 +627,6 @@ button.issue-number:hover {
   gap: 48px;
   align-items: start;
   padding-top: 20px;
-  border-top: var(--rule-thin) solid var(--rule);
 }
 
 .lead__title {
