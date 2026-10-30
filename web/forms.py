@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import UploadedFile
 
 from .models import Post
+from .widgets import FocalPointImageInput
 
 MAX_IMAGE_SIZE_BYTES = 1024 * 1024  # 1 MB
 ALLOWED_IMAGE_CONTENT_TYPES = {
@@ -27,6 +28,12 @@ class PostAdminForm(PostAdminFormBase):
     class Meta:
         model: type[Post] = Post
         fields: str = "__all__"
+        # The focal point is set by clicking on the image, not by typing numbers.
+        widgets: dict[str, forms.Widget] = {
+            "featured_image": FocalPointImageInput(),
+            "focal_x": forms.HiddenInput(),
+            "focal_y": forms.HiddenInput(),
+        }
 
     def clean_featured_image(self) -> object:
         image: object = self.cleaned_data.get("featured_image")

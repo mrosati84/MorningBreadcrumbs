@@ -1,0 +1,115 @@
+/* Focal point picker for the Post admin (see web/widgets.py). */
+
+.focal {
+  margin-top: 12px;
+  max-width: 760px;
+}
+
+.focal[hidden] {
+  display: none;
+}
+
+.focal__help {
+  margin: 0 0 8px;
+  color: #666;
+}
+
+.focal__layout {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.focal__stage {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  line-height: 0;
+  background: #eee;
+}
+
+.focal__stage:focus-visible {
+  outline: 2px solid #309bbf;
+  outline-offset: 2px;
+}
+
+.focal__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.focal__marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.6), inset 0 0 0 1px rgb(0 0 0 / 0.6);
+  pointer-events: none;
+}
+
+.focal__marker::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Equal heights, so each frame's width follows its aspect ratio. */
+.focal__previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.focal__preview {
+  margin: 0;
+}
+
+.focal__frame {
+  height: 120px;
+  overflow: hidden;
+  background: #eee;
+}
+
+/* Same cropping as .media__image on the site. */
+.focal__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.focal__preview figcaption {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #666;
+}
+
+/* Grappelli sizes bare buttons as square icons; restore a text button. */
+.focal .focal__reset {
+  width: auto;
+  height: auto;
+  margin: 12px 0 0;
+  padding: 5px 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  color: #444;
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.focal .focal__reset:hover {
+  border-color: #309bbf;
+  color: #309bbf;
+}

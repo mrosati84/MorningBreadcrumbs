@@ -4,6 +4,7 @@ from collections.abc import Iterable
 from datetime import date, datetime
 from typing import override
 
+from django.core.validators import MaxValueValidator
 from django.db import models, transaction
 from django.db.models import Q
 from django.db.models.base import ModelBase
@@ -159,6 +160,18 @@ class Post(models.Model):
     featured_image: models.ImageField = models.ImageField(
         upload_to="posts/", blank=True, null=True
     )
+    # Point of the image to keep in frame when the front end crops it to its
+    # different aspect ratios, as percentages of the width and height.
+    focal_x: models.PositiveSmallIntegerField[int, int] = (
+        models.PositiveSmallIntegerField(
+            default=50, validators=[MaxValueValidator(100)]
+        )
+    )
+    focal_y: models.PositiveSmallIntegerField[int, int] = (
+        models.PositiveSmallIntegerField(
+            default=50, validators=[MaxValueValidator(100)]
+        )
+    )
     created_at: models.DateTimeField[datetime, datetime] = models.DateTimeField(
         auto_now_add=True
     )
@@ -183,3 +196,8 @@ class Post(models.Model):
     @override
     def __str__(self) -> str:
         return self.title
+
+    @property
+    def object_position(self) -> str:
+        """CSS `object-position` that keeps the focal point in frame."""
+        return f"{self.focal_x}% {self.focal_y}%"
