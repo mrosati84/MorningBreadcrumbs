@@ -6,6 +6,7 @@ from io import BytesIO
 from pathlib import Path
 from typing import ClassVar, cast, override
 
+from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import call_command
@@ -345,6 +346,27 @@ class FocalPointTests(TestCase):
         )
         self.assertFalse(form.is_valid())
         self.assertIn("focal_x", form.errors)
+
+
+class PostAdminTests(TestCase):
+    def test_changelist_sorts_by_the_date_shown_on_the_site(self) -> None:
+        issue = Issue.objects.create(number=1, published_on=date(2026, 9, 1))
+        category = Category.objects.create(name="News")
+        for title, day in (("Older", 1), ("Newer", 2)):
+            post = Post.objects.create(issue=issue, category=category, title=title)
+            created_at = datetime(2026, 9, day, tzinfo=timezone.utc)
+            _ = Post.objects.filter(id=post.id).update(created_at=created_at)
+        user = User.objects.create_superuser("admin", "admin@example.com", "pw")
+        self.client.force_login(user)
+        url = reverse("admin:web_post_changelist")
+
+        # created_at is the 2nd column; "-2" sorts it newest first.
+        response = self.client.get(url, {"o": "-2"})
+        changelist = cast(ChangeList, response.context["cl"])
+        result_list = cast(list[Post], changelist.result_list)
+        titles = [post.title for post in result_list]
+        self.assertEqual(titles, ["Newer", "Older"])
+        self.assertContains(response, "column-created_at")
 
 
 class LoginRemovedTests(TestCase):
