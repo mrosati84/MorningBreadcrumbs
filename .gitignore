@@ -10,10 +10,13 @@ wheels/
 .venv
 
 # Media uploads (user content)
-media/
+/media/
 
 # ignore env vars
 .env
 
-# collected static files
-static/
+# collected static files (STATIC_ROOT only, not app static dirs)
+/static/
+
+# macOS
+.DS_Store
