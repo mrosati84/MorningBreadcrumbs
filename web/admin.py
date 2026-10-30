@@ -84,7 +84,9 @@ class IssueAdmin(IssueAdminBase):
 @admin.register(Post)
 class PostAdmin(PostAdminBase):
     form = PostAdminForm
-    list_display = ("title", "issue", "category", "tags_list", "link")
+    # created_at is the date shown next to each post on the site; listing it
+    # makes the changelist sortable by it.
+    list_display = ("title", "created_at", "issue", "category", "tags_list", "link")
     list_filter = ("issue", "category", "tags")
     search_fields = ("title", "description", "link")
     autocomplete_fields = ("issue", "category", "tags")
