@@ -1,0 +1,218 @@
+[
+  {
+    "model": "web.post",
+    "pk": 1,
+    "fields": {
+      "title": "A field guide to accessible color contrast",
+      "description": "Practical rules for picking text and background colors that stay readable for everyone, with a walkthrough of the WCAG contrast math and the tools that automate it.",
+      "link": "https://www.smashingmagazine.com/2026/09/accessible-color-contrast-guide/",
+      "created_at": "2026-10-29T08:15:00Z",
+      "category": 1,
+      "tags": [1, 2, 11]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 2,
+    "fields": {
+      "title": "Designing empty states that do real work",
+      "description": "An empty screen is not a failure, it is onboarding. How to use the first-run state to teach the interface, set expectations and invite the next action.",
+      "link": "https://alistapart.com/article/designing-empty-states/",
+      "created_at": "2026-10-27T09:40:00Z",
+      "category": 1,
+      "tags": [11]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 3,
+    "fields": {
+      "title": "The quiet comeback of the serif in UI",
+      "description": "Serif typefaces are showing up in product interfaces again. What changed in rendering, and where a serif helps rather than distracts.",
+      "link": "https://typewolf.com/editorial/serif-ui-trend",
+      "created_at": "2026-10-22T07:05:00Z",
+      "category": 1,
+      "tags": [10]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 4,
+    "fields": {
+      "title": "Django 6.0: what actually changed",
+      "description": "A tour of the release notes with an eye on upgrades: template partials, background tasks conventions, and the deprecations you should clear before they bite.",
+      "link": "https://docs.djangoproject.com/en/6.0/releases/6.0/",
+      "created_at": "2026-10-28T10:20:00Z",
+      "category": 2,
+      "tags": [3, 8]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 5,
+    "fields": {
+      "title": "Full-text search in Postgres without the pain",
+      "description": "When trigram similarity beats LIKE, how to index it properly, and the threshold values that keep typo tolerance from turning into noise.",
+      "link": "https://pganalyze.com/blog/postgres-trigram-search",
+      "created_at": "2026-10-24T11:00:00Z",
+      "category": 2,
+      "tags": [6, 3]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 6,
+    "fields": {
+      "title": "Modern CSS layout patterns worth keeping",
+      "description": "Container queries, subgrid and logical properties have quietly replaced a drawer full of layout hacks. A reference of the patterns that survived.",
+      "link": "https://web.dev/articles/modern-css-layout",
+      "created_at": "2026-10-19T08:30:00Z",
+      "category": 2,
+      "tags": [2]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 7,
+    "fields": {
+      "title": "Tests that pay for themselves",
+      "description": "A pragmatic split between unit, integration and smoke tests for a Django project, and why testing the admin is often a waste of time.",
+      "link": "https://testdriven.io/blog/django-testing-strategy/",
+      "created_at": "2026-10-14T14:10:00Z",
+      "category": 2,
+      "tags": [3, 9, 8]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 8,
+    "fields": {
+      "title": "Serving WebP and AVIF without a CDN",
+      "description": "How far you can get with Django, WhiteNoise and a build step: content negotiation, cache headers, and the fallback chain for older browsers.",
+      "link": "https://www.django-news.com/issues/webp-avif-without-cdn",
+      "created_at": "2026-10-09T09:00:00Z",
+      "category": 2,
+      "tags": [12, 5, 3]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 9,
+    "fields": {
+      "title": "Shipping smaller: the case against the roadmap",
+      "description": "Roadmaps describe intentions, not outcomes. What happens when a product team replaces the twelve-month plan with a single bet and a weekly review.",
+      "link": "https://www.lennysnewsletter.com/p/shipping-smaller",
+      "created_at": "2026-10-26T07:45:00Z",
+      "category": 3,
+      "tags": [11, 7]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 10,
+    "fields": {
+      "title": "Interviewing users when nobody has time",
+      "description": "Five lightweight research formats that fit inside a normal sprint, from hallway testing to a two-question exit survey.",
+      "link": "https://www.nngroup.com/articles/lightweight-user-research/",
+      "created_at": "2026-10-18T13:25:00Z",
+      "category": 3,
+      "tags": [11]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 11,
+    "fields": {
+      "title": "Metrics that survive a reorganisation",
+      "description": "Why most dashboards rot within a quarter, and a small set of definitions that keep product metrics comparable across teams and time.",
+      "link": "https://amplitude.com/blog/metrics-that-last",
+      "created_at": "2026-10-05T10:05:00Z",
+      "category": 3,
+      "tags": [7]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 12,
+    "fields": {
+      "title": "The staff engineer's path",
+      "description": "Notes from a book on senior individual contributors: how the job changes, what gets measured, and the traps of becoming a decision bottleneck.",
+      "link": "https://www.oreilly.com/library/view/the-staff-engineers/9781098118723/",
+      "created_at": "2026-10-21T06:50:00Z",
+      "category": 4,
+      "tags": [7, 8]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 13,
+    "fields": {
+      "title": "Deep work in a notification-shaped world",
+      "description": "A short essay on attention residue and the practical scheduling tricks that make two uninterrupted hours possible again.",
+      "link": "https://calnewport.com/deep-work-in-a-notification-world/",
+      "created_at": "2026-10-11T08:00:00Z",
+      "category": 4,
+      "tags": [7]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 14,
+    "fields": {
+      "title": "Reading code like literature",
+      "description": "On building a habit of reading other people's source code for pleasure and pattern recognition, with a starter list of well-written projects.",
+      "link": "https://blog.jim-nielsen.com/2026/reading-code-like-literature/",
+      "created_at": "2026-09-30T09:15:00Z",
+      "category": 4,
+      "tags": [8, 7]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 15,
+    "fields": {
+      "title": "A compose file for every side project",
+      "description": "The minimal Docker Compose setup for Postgres and Redis in development: healthchecks, named volumes, and binding to localhost only.",
+      "link": "https://docs.docker.com/compose/how-tos/startup-order/",
+      "created_at": "2026-10-23T12:35:00Z",
+      "category": 5,
+      "tags": [4, 6]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 16,
+    "fields": {
+      "title": "uv, ruff and the new Python toolchain",
+      "description": "Replacing pip, pip-tools, virtualenv and flake8 with two fast binaries, and what to keep in CI so the switch stays boring.",
+      "link": "https://docs.astral.sh/uv/guides/migration/",
+      "created_at": "2026-09-25T10:45:00Z",
+      "category": 5,
+      "tags": [8, 9, 7]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 17,
+    "fields": {
+      "title": "pgAdmin is not a database client",
+      "description": "The case for psql and a handful of scripts over a GUI: reproducible queries, readable diffs, and faster onboarding for new team members.",
+      "link": "https://www.crunchydata.com/blog/why-psql",
+      "created_at": "2026-09-18T07:20:00Z",
+      "category": 5,
+      "tags": [6, 7]
+    }
+  },
+  {
+    "model": "web.post",
+    "pk": 18,
+    "fields": {
+      "title": "Image optimisation as a deployment step",
+      "description": "Converting uploads to WebP at save time keeps templates simple, but it has consequences for storage and migrations. A look at the trade-offs.",
+      "link": "https://www.smashingmagazine.com/2026/08/image-optimisation-pipeline/",
+      "created_at": "2026-09-12T15:00:00Z",
+      "category": 1,
+      "tags": [12, 5]
+    }
+  }
+]

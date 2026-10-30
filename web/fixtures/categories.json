@@ -1,0 +1,42 @@
+[
+  {
+    "model": "web.category",
+    "pk": 1,
+    "fields": {
+      "name": "Design",
+      "slug": "design"
+    }
+  },
+  {
+    "model": "web.category",
+    "pk": 2,
+    "fields": {
+      "name": "Development",
+      "slug": "development"
+    }
+  },
+  {
+    "model": "web.category",
+    "pk": 3,
+    "fields": {
+      "name": "Product",
+      "slug": "product"
+    }
+  },
+  {
+    "model": "web.category",
+    "pk": 4,
+    "fields": {
+      "name": "Reading",
+      "slug": "reading"
+    }
+  },
+  {
+    "model": "web.category",
+    "pk": 5,
+    "fields": {
+      "name": "Tools",
+      "slug": "tools"
+    }
+  }
+]
