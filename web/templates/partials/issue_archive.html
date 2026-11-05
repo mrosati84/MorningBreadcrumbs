@@ -1,4 +1,4 @@
-{% if issue %}
+{% if issue or all_issues %}
 <dialog id="issue-archive" class="archive surface" aria-labelledby="archive-title" data-archive tabindex="-1">
   <div class="archive__inner">
     <div class="masthead__bar">
@@ -15,12 +15,26 @@
     <div class="masthead__status"></div>
     <div class="masthead__title">
       <h2 id="archive-title" class="masthead__heading">All issues</h2>
-      <span class="issue-number">{{ issue }}</span>
+      <span class="issue-number">{% if all_issues %}All{% else %}{{ issue }}{% endif %}</span>
     </div>
 
     <div class="archive__grid">
+      <a href="{% url 'web:all_issues' %}" style="--i: 0"
+         class="archive-cell hover-link{% if all_issues %} is-current{% endif %}"
+         {% if all_issues %}aria-current="page"{% endif %}
+         aria-label="All issues, {{ all_posts.count }} entries">
+        <span class="archive-cell__meta">
+          <span>{{ all_posts.count|stringformat:"02d" }} entries</span>
+          <span class="archive-cell__tag">{% if all_issues %}Viewing{% endif %}</span>
+        </span>
+        <span class="archive-cell__head">
+          <span class="archive-cell__number">All<span class="archive-cell__dot" aria-hidden="true"></span></span>
+          {% include "partials/icons/arrow_out.html" %}
+        </span>
+        <span class="archive-cell__subject">Every issue</span>
+      </a>
       {% for archived in issue_archive %}
-        <a href="{{ archived.get_absolute_url }}" style="--i: {{ forloop.counter0 }}"
+        <a href="{{ archived.get_absolute_url }}" style="--i: {{ forloop.counter }}"
            class="archive-cell hover-link{% if archived.pk == issue.pk %} is-current{% endif %}"
            {% if archived.pk == issue.pk %}aria-current="page"{% endif %}
            aria-label="Issue {{ archived.number }}, {{ archived.published_on|date:'d.m.Y' }}">

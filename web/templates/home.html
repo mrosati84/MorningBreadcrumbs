@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Morning &gt; Breadcrumbs{% if issue and not issue.is_active %} &gt; Issue {{ issue }}{% endif %}{% endblock %}
+{% block title %}Morning &gt; Breadcrumbs{% if all_issues %} &gt; All issues{% elif issue and not issue.is_active %} &gt; Issue {{ issue }}{% endif %}{% endblock %}
 
 {% block main %}
   {% for section in sections %}

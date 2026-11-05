@@ -20,7 +20,14 @@
   </div>
 
   <div class="masthead__status">
-    {% if issue and not issue.is_active %}
+    {% if all_issues %}
+      <span class="masthead__viewing">
+        Viewing all issues · {{ entry_count|stringformat:"02d" }} entries
+      </span>
+      <a href="{% url 'web:home' %}" class="masthead__back">
+        Back to latest issue {% include "partials/icons/close.html" %}
+      </a>
+    {% elif issue and not issue.is_active %}
       <span class="masthead__viewing">
         Viewing issue {{ issue }} — {{ issue.published_on|date:"d.m.Y" }} · {{ entry_count|stringformat:"02d" }} entries
       </span>
@@ -34,11 +41,11 @@
 
   <div class="masthead__title">
     <h1 class="masthead__heading" data-reveal>Morning &gt; Breadcrumbs</h1>
-    {% if issue %}
+    {% if issue or all_issues %}
       <div class="masthead__issue" data-reveal style="--reveal-delay: 150ms">
         <button type="button" class="issue-number" data-archive-open
                 aria-haspopup="dialog" aria-controls="issue-archive"
-                aria-label="Issue {{ issue.number }} — open all issues">{{ issue }}</button>
+                aria-label="{% if all_issues %}All issues{% else %}Issue {{ issue.number }}{% endif %} — open all issues">{% if all_issues %}All{% else %}{{ issue }}{% endif %}</button>
         <span class="live-dot" aria-hidden="true"></span>
       </div>
     {% endif %}
