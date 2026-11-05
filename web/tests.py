@@ -149,6 +149,31 @@ class IssuePageTests(TestCase):
             response, f'<a href="{reverse("web:home")}" class="masthead__home"', count=2
         )
 
+    def test_all_issues_page_shows_posts_of_every_issue(self) -> None:
+        response = self.client.get(reverse("web:all_issues"))
+
+        self.assertContains(response, "Current lead")
+        self.assertContains(response, "Archived design post")
+        self.assertContains(response, "Viewing all issues · 03 entries")
+        tabs = cast(list[Tab], response.context["tabs"])
+        self.assertEqual(tabs[0].count, 3)
+
+    def test_all_issues_category_filter_stays_on_all_issues(self) -> None:
+        response = self.client.get(reverse("web:all_issues"), {"c": self.design.slug})
+
+        self.assertContains(response, "Current design post")
+        self.assertContains(response, "Archived design post")
+        self.assertNotContains(response, "Current lead")
+        tabs = cast(list[Tab], response.context["tabs"])
+        self.assertEqual(tabs[0].url, reverse("web:all_issues"))
+
+    def test_archive_overlay_lists_all_before_every_issue(self) -> None:
+        content = self.client.get(reverse("web:home")).content.decode()
+
+        all_link = content.index(f'href="{reverse("web:all_issues")}"')
+        self.assertLess(all_link, content.index('href="/issues/1/"'))
+        self.assertLess(all_link, content.index('class="archive-cell hover-link is-current"'))
+
     def test_home_without_issues_renders_empty_state(self) -> None:
         _ = Post.objects.all().delete()
         _ = Issue.objects.all().delete()

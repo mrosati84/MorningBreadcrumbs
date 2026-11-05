@@ -123,21 +123,22 @@ def _latest_update(posts: list[Post]) -> datetime | None:
     return max((post.created_at for post in posts), default=None)
 
 
-def _issue_posts(issue: Issue) -> QuerySet[Post]:
-    return (
-        Post.objects.filter(issue=issue)
-        .select_related("category")
-        .order_by("-created_at")
-    )
+def _posts() -> QuerySet[Post]:
+    return Post.objects.select_related("category").order_by("-created_at")
 
 
 def _active_issue() -> Issue | None:
     return Issue.objects.filter(is_active=True).first()
 
 
-def _render_issue(request: HttpRequest, issue: Issue | None) -> HttpResponse:
-    posts = list(_issue_posts(issue)) if issue else []
-    base_url = issue.get_absolute_url() if issue else reverse("web:home")
+def _render_listing(
+    request: HttpRequest,
+    posts: list[Post],
+    base_url: str,
+    *,
+    issue: Issue | None,
+    all_issues: bool = False,
+) -> HttpResponse:
     tabs, selected = _category_tabs(request, posts, base_url)
     visible = [post for post in posts if selected is None or post.category == selected]
 
@@ -146,6 +147,7 @@ def _render_issue(request: HttpRequest, issue: Issue | None) -> HttpResponse:
         "home.html",
         {
             "issue": issue,
+            "all_issues": all_issues,
             "updated_at": _latest_update(posts),
             "entry_count": len(posts),
             "tabs": tabs,
@@ -156,9 +158,22 @@ def _render_issue(request: HttpRequest, issue: Issue | None) -> HttpResponse:
     )
 
 
+def _render_issue(request: HttpRequest, issue: Issue | None) -> HttpResponse:
+    posts = list(_posts().filter(issue=issue)) if issue else []
+    base_url = issue.get_absolute_url() if issue else reverse("web:home")
+    return _render_listing(request, posts, base_url, issue=issue)
+
+
 def home(request: HttpRequest) -> HttpResponse:
     """The active issue, grouped by category."""
     return _render_issue(request, _active_issue())
+
+
+def all_issues(request: HttpRequest) -> HttpResponse:
+    """The posts of every issue, laid out like a single issue."""
+    return _render_listing(
+        request, list(_posts()), reverse("web:all_issues"), issue=None, all_issues=True
+    )
 
 
 def issue_detail(request: HttpRequest, number: int) -> HttpResponse:
